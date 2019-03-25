@@ -1,4 +1,5 @@
 .idea/*
+
 # tex
 *.aux
 *.bbl
@@ -12,3 +13,4 @@
 *.xdv
 
 team-info*
+ref*
