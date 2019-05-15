@@ -11,13 +11,13 @@
 // }
 
 // Open the test page, method 2
-function bclick(){
-var remote=require('electron').remote
-var BrowserWindow=remote.BrowserWindow
-var win=new BrowserWindow({ width: 800, height: 600 })
-win.loadFile('./src/test.html')
+function openPage(page){
+    var remote=require('electron').remote
+    var BrowserWindow=remote.BrowserWindow
+    var win=new BrowserWindow({ width: 800, height: 600 })
+    win.loadFile('./src/'+page)
 }
-      
+
 
 // Record
 var currentNote=null
