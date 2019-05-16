@@ -119,5 +119,3 @@
     }
   
   })();
-
-  console.alert("timeline.js")

@@ -16,6 +16,7 @@ function openPage(page){
     var BrowserWindow=remote.BrowserWindow
     var win=new BrowserWindow({ width: 800, height: 600 })
     win.loadFile('./src/'+page)
+    win.webContents.openDevTools()
 }
 
 
