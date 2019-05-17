@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>xNote Markdown2Html+PDF</title>
+    <title>xNote Markdown2Html&PDF&PNG</title>
     <script src="jquery.min.js"></script>
 	<script src="html2canvas.js"></script>
 	<script src="jsPdf.debug.js"></script>
@@ -65,10 +65,15 @@
 	</style>
 </head>
 <body id="edit">
-<div><button id="download" class="button">html转换</button><button class="button" id="downloadPdf">PDF转换</button></div>
+<div><button id="download" class="button">html转换</button>
+	<button class="button" id="downloadPdf">PDF转换</button>
+	<button class="button" id="downloadPng">png转换</button>
+</div>
 
 <textarea  id="content"></textarea> 
 <div id="show" class="typo markdown-body">xNote 1.0</div>
+
+
 
 <script>
     marked.setOptions({
@@ -90,7 +95,6 @@
         var val = $(this).val();
         $("#show").html(marked(val));
     });
-
 
     function downloadFile(fileName, content){
       var aLink = document.createElement('a');
@@ -161,7 +165,6 @@ $("#downloadPdf").click(e=>{
 		  var imgHeight = 592.28/contentWidth * contentHeight;
 
 		  var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
 		  var pdf = new jsPDF('', 'pt', 'a4');
 
 		  //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
@@ -185,6 +188,26 @@ $("#downloadPdf").click(e=>{
 	})
 });	
 	
+$("#downloadPng").click(e=>{
+	html2canvas(document.body, {
+	  onrendered:function(canvas) {
+	  	var pageData = canvas.toDataURL('image/png', 1.0)
+	  	.replace("image/png", "image/octet-stream"); 
+	  	var saveFile = function (data, filename) {
+        var link = document.createElement('a');
+        link.href = data;
+        link.download = filename;
+    	var event = document.createEvent('MouseEvents');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        link.dispatchEvent(event);
+
+    	}
+    saveFile(pageData, "content.png");
+		save_href.href = pageData;
+		save_img.src = pageData;
+		}
+	})
+});	
 
 
 </script>
