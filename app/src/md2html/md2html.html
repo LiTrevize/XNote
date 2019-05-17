@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>xNote Markdown2Html+PDF</title>
-    <script src="jquery.min.js"></script>
+	<title>xNote Markdown2Html+PDF</title>
+	<script>window.$ = window.jQuery = require("./jquery.min.js");</script>
 	<script src="html2canvas.js"></script>
 	<script src="jsPdf.debug.js"></script>
     <script src="highlight.min.js"></script>
     <script src="https://cdn.bootcss.com/marked/0.3.4/marked.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
 	<link rel="stylesheet" href="https://sindresorhus.com/github-markdown-css/github-markdown.css">
 	<style>
 		
@@ -68,9 +69,12 @@
 <div><button id="download" class="button">html转换</button><button class="button" id="downloadPdf">PDF转换</button></div>
 
 <textarea  id="content"></textarea> 
-<div id="show" class="typo markdown-body">xNote 1.0</div>
+<div id="show" class="markdown-body">xNote 1.0</div>
 
 <script>
+	var md = require('markdown-it')(),
+		mk = require('markdown-it-katex');
+	md.use(mk);
     marked.setOptions({
         renderer: new marked.Renderer(),
         gfm: true,
@@ -87,8 +91,8 @@
     });
 
     $("#content").on("input  propertychange", function() {
-        var val = $(this).val();
-        $("#show").html(marked(val));
+		var val = $(this).val();
+        $("#show").html(md.render(val));
     });
 
 

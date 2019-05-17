@@ -18,3 +18,4 @@ project_proposal/*
 Documentation/Source
 Documentation/UseCase
 UMLModel/
+node_modules/
