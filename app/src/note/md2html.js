@@ -4,8 +4,8 @@ new_element.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.
 document.body.appendChild(new_element);
 
 
-var md = require('markdown-it')(),
-    mk = require('markdown-it-katex');
+var md = require('../../node_modules/markdown-it')(),
+    mk = require('../../node_modules/markdown-it-katex');
 md.use(mk);
 
 
