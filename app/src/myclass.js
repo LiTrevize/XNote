@@ -7,6 +7,7 @@ module.exports = {
     Note: function(){
         // var title="" private
         this.title="" // public
+        this.lastOpen=0
         this.path=""
         this.content=""
         this.record=new Record()

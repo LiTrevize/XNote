@@ -23,7 +23,7 @@ var template = [
                 label:'Save',
                 click:function(){
                     const ipcRenderer = require('electron').ipcRenderer;
-                    console.log(ipcRenderer.sendSync('saveNote'))
+                    console.log(ipcRenderer.sendSync('saveNote',mynote))
                 }
             },
             {
@@ -88,6 +88,14 @@ var template = [
                 label:'test',
                 click:function(){
                     console.log('test')
+                    console.log(document.head.innerText)
+                }
+            },
+            {
+                label:'timeline',
+                click:function(){
+                    const ipcRenderer = require('electron').ipcRenderer;
+                    console.log(ipcRenderer.sendSync('timeline'))
                 }
             }
         ]

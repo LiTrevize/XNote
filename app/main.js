@@ -65,17 +65,27 @@ ipc.on('openNote',function(event){
   var path=openFileDialog()[0]
   var content=loadFile(path)
   console.log(path)
-  createNotePage(content)
+  var note= new myclass.Note()
+  note.content=content
+  note.title='testNote'
+  note.lastOpen=1000
+  note.path="D:/Projects/XNote/app/saves/test.txt"
+  createNotePage(note)
 })
 
 ipc.on('newNote',function(event){
   createNotePage('')
 })
 
-ipc.on('saveNote',function(event){
-  
+ipc.on('saveNote',function(event,mynote){
+  console.log(mynote.content)
+  // console.log(mynote.content)
+  // saveToFile(mynote.path,mynote.content)
 })
 
+ipc.on('timeline',function(event){
+  createPage('src/record/timeline.html')
+})
 
 function openFileDialog(){
   const dialog=require('electron').dialog
@@ -90,7 +100,7 @@ function openFileDialog(){
   return path
 }
 
-function createNotePage(content=""){
+function createNotePage(note=new Note()){
   var winNote=new BrowserWindow({
     width: 800,
     height: 600,
@@ -108,7 +118,7 @@ function createNotePage(content=""){
   // send message to load note
   winNote.webContents.on('did-finish-load',function(){
       console.log("ready to show")
-      winNote.webContents.send('loadNote',content)
+      winNote.webContents.send('loadNote',note)
   })
 
   // Emitted when the window is closed.
@@ -123,6 +133,38 @@ function createNotePage(content=""){
 
 }
 
+function createPage(htmlpath=""){
+  var winNote=new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      webSecurity: false
+    }
+  })
+  winNote.loadFile(htmlpath)
+  windows.push(winNote)
+  // Open the DevTools.
+  winNote.webContents.openDevTools()
+
+
+  // send message to load note
+  // winNote.webContents.on('did-finish-load',function(){
+  //     console.log("ready to show")
+  //     winNote.webContents.send('loadNote',note)
+  // })
+
+  // Emitted when the window is closed.
+  winNote.on('closed', function () {
+      // Dereference the window object, usually you would store windows
+      // in an array if your app supports multi windows, this is the time
+      // when you should delete the corresponding element.
+      winNote = null
+  })
+
+ 
+
+}
 
 var fs=require("fs")
 
