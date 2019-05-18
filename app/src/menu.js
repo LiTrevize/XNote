@@ -1,16 +1,27 @@
+// require("FileSystem")
+const ipcRenderer = require('electron').ipcRenderer;
+
 var template = [
     {
         label: 'File',
         submenu:[
                     {
                         label:'New',
-                        click:function(){}
+                        click:function(){
+                            console.log(ipcRenderer.sendSync('newNote'))
+                        }
                     },
                     {
-                        label:'Open'
+                        label:'Open',
+                        click:function(){
+                            console.log(ipcRenderer.sendSync('openNote'));
+                        }
                     },
                     {
-                        label:'Save'
+                        label:'Save',
+                        click:function(){
+                            console.log(ipcRenderer.sendSync('saveNote'))
+                        }
                     },
                     {
                         label:'SaveAll'
