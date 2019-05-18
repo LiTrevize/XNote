@@ -1,13 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>My Note</title>
+    <title>xNote Markdown2Html+PDF</title>
+    <script>window.$ = window.jQuery = require("./jquery.min.js");</script>
     <script src="editNote.js"></script>
-    <script src="../menu.js"></script>
-  </head>
-  <body>
-    <h1>Edit Note</h1>
-    <div id="text" style="height:600px;width:200px;" contenteditable="true">To be or not to be that is a question</div><br>
-  </body>
+	<script src="html2canvas.js"></script>
+	<script src="jsPdf.debug.js"></script>
+    <script src="highlight.min.js"></script>
+    <script src="https://cdn.bootcss.com/marked/0.3.4/marked.min.js"></script>
+	<link rel="stylesheet" href="https://sindresorhus.com/github-markdown-css/github-markdown.css">
+    <link rel="stylesheet" type="text/css" href="editNote.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+	
+</head>
+<body id="edit">
+
+<div class="search" class = "top">
+  <input type="search" class="search-box" />
+  <span class="search-button">
+    <span class="search-icon"></span>
+  </span>
+</div>
+
+    <script  src="js/index.js"></script>
+
+
+<textarea id="content"></textarea> 
+<!-- <div id="content" contenteditable = "true"></div> -->
+<div id="show" class="typo markdown-body">xNote 1.0</div>
+
+
+<script id="tpl" type="text/plain">
+ <html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+<title>GitHub Markdown CSS demo</title>
+<link rel="stylesheet" href="https://sindresorhus.com/github-markdown-css/github-markdown.css">
+<style>
+	@media (min-width: 768px) {
+		.markdown-body {
+			box-sizing: border-box;
+			min-width: 200px;
+			max-width: 980px;
+			margin: 0 auto;
+			padding: 45px;
+		}
+	}
+</style>
+</head>
+<body>
+<article class="markdown-body">
+{content}
+</article>
+</body>
 </html>
+</script>
+<script src="md2html.js"></script>
+</body>

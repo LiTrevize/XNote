@@ -4,8 +4,27 @@ const myclass=require('./src/myclass')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-var notelist=new myclass.NoteList()
+var myBook=new myclass.NoteList()
 var windows=new Array()
+
+// test
+var event1 = new myclass.Note;
+event1.title = "XXXXNOTE!";
+event1.lastOpen = 7;
+
+var event2 = new myclass.Note;
+event2.title = "SOFTWARE ENGINEERING!!!!";
+event2.lastOpen = 12;
+
+var event3 = new myclass.Note;
+event3.title = "!!!!!!!!!!!!!!!!!!!!";
+event3.lastOpen = 17;
+
+myBook.addNote(event1);
+myBook.addNote(event2);
+myBook.addNote(event3);
+
+
 
 function createWindow () {
   // Create the browser window.
@@ -25,10 +44,18 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  // load timeline
+  mainWindow.webContents.on('did-finish-load',function(){
+    mainWindow.webContents.send('loadtl',myBook)
+  })
+  
+
   mainWindow.on('focus',function(){
     console.log('home')
-    
   })
+
+  // mainWindow.on('did-finish-load',myclass.UpdateTimeLine(notelist))
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
@@ -126,7 +153,7 @@ function createNotePage(note=new Note()){
       // Dereference the window object, usually you would store windows
       // in an array if your app supports multi windows, this is the time
       // when you should delete the corresponding element.
-      winNote = null
+      // winNote = null
   })
 
  
@@ -159,7 +186,7 @@ function createPage(htmlpath=""){
       // Dereference the window object, usually you would store windows
       // in an array if your app supports multi windows, this is the time
       // when you should delete the corresponding element.
-      winNote = null
+      // winNote = null
   })
 
  
