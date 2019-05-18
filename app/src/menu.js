@@ -16,10 +16,16 @@ var template = [
                         label:'SaveAll'
                     },
                     {
+                        type: 'separator'
+                    },
+                    {
                         label:'Export'
                     },
                     {
                         type: 'separator'
+                    },
+                    {
+                        label:'Exit'
                     }
                 ],
     },
