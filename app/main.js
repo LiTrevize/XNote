@@ -5,6 +5,7 @@ const myclass=require('./src/myclass')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 var notelist=new myclass.NoteList()
+var windows=new Array()
 
 function createWindow () {
   // Create the browser window.
@@ -24,7 +25,10 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-
+  mainWindow.on('focus',function(){
+    console.log('home')
+    
+  })
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
@@ -57,7 +61,6 @@ app.on('activate', function () {
 
 // Listening to Events
 var ipc=require('electron').ipcMain;
-
 ipc.on('openNote',function(event){
   var path=openFileDialog()[0]
   var content=loadFile(path)
@@ -67,6 +70,10 @@ ipc.on('openNote',function(event){
 
 ipc.on('newNote',function(event){
   createNotePage('')
+})
+
+ipc.on('saveNote',function(event){
+  
 })
 
 
@@ -93,7 +100,7 @@ function createNotePage(content=""){
     }
   })
   winNote.loadFile('src/note/editNote.html')
-
+  windows.push(winNote)
   // Open the DevTools.
   winNote.webContents.openDevTools()
 
