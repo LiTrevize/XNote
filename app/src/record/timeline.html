@@ -1,6 +1,3 @@
-<!-- inspired by:
-  https://codepen.io/darcyvoutt/pen/ogPrpK
--->
 <head>
     <link rel="stylesheet" type="text/css" href="timeline.css">
     <script src="../jquery.js"></script>
@@ -8,113 +5,39 @@
 </head>
 
 <body>
-
 <div id="content">
   <ul class="timeline" id="tl">
-      
-      <li class="event" data-date="12:30 - 1:00pm">
+    <li class="event" data-date="12:30 - 1:00pm">
         <div class="member-infos">
           <h1 class="member-title" >Registration</h1>
           <h2 class="member-location "><span class='entypo-location'></span>Nantes, France</h2>
-  
-          <!-- <ul class="member-contact">
-            <li class="member-website"><a class="entypo-globe" target="_blank" href="http://www.barneyparker.com"></a></li>
-            <li class="member-twitter"><a class="entypo-twitter" target="_blank" href="https://twitter.com/barney_parker"></a></li>
-            <li class="member-hire"><a class="entypo-mail" target="_blank" href="mailto://barney@barneyparker.com"></a></li>
-          </ul>
-   -->
-<!-- 
-          <div class="member-parameters">
-            <span class="follow entypo-plus"></span>
-            <span class="options entypo-cog"></span>
-            <ul class="member-socials">
-              <li class="member-shots-number"><a href="http://dribbble.com/One_div">3 <span class="shots-number">shots</span></a></li>
-              <li class="member-follower"><a href="http://dribbble.com/One_div/followers">12 <span class="followers">followers</span></a></li>
-            </ul>
-          </div> -->
-  
         </div>
-  
-      </li>
-      <li id='fader' class="event" data-date="2:30 - 4:00pm">
-        <div class="member-infos">
-          <h1 class='member-title'>Opening Ceremony</h1>
-          <h2 class="member-location "><span class='entypo-location'></span>Nantes, France</h2>
-  
-          <!-- <ul class="member-contact">
-            <li class="member-website"><a class="entypo-globe" target="_blank" href="http://www.barneyparker.com"></a></li>
-            <li class="member-twitter"><a class="entypo-twitter" target="_blank" href="https://twitter.com/barney_parker"></a></li>
-            <li class="member-hire"><a class="entypo-mail" target="_blank" href="mailto://barney@barneyparker.com"></a></li>
-          </ul>
-   -->
-
-<!--           <div class="member-parameters">
-            <a href="" class="follow entypo-plus"></a>
-            <a href="" class="options entypo-cog"></a>
-            <ul class="member-socials">
-              <li class="member-shots-number"><a href="http://dribbble.com/One_div">3 <span class="shots-number">shots</span></a></li>
-              <li class="member-follower"><a href="http://dribbble.com/One_div/followers">12 <span class="followers">followers</span></a></li>
-            </ul>
-          </div>
- -->  
-        </div>
-  
-      </li>
-      <li class="event" data-date="5:00 - 8:00pm">
-        <div class="member-infos">
-          <h1 class='member-title'>Main Event</h1>
-          <h2 class="member-location "><span class='entypo-location'></span>Nantes, France</h2>
-  
- <!--          <ul class="member-contact">
-            <li class="member-website"><a class="entypo-globe" target="_blank" href="http://www.barneyparker.com"></a></li>
-            <li class="member-twitter"><a class="entypo-twitter" target="_blank" href="https://twitter.com/barney_parker"></a></li>
-            <li class="member-hire"><a class="entypo-mail" target="_blank" href="mailto://barney@barneyparker.com"></a></li>
-          </ul> -->
-  
-
-          <!-- <div class="member-parameters">
-            <a href="" class="follow entypo-plus"></a>
-            <a href="" class="options entypo-cog"></a>
-            <ul class="member-socials">
-              <li class="member-shots-number"><a href="http://dribbble.com/One_div">3 <span class="shots-number">shots</span></a></li>
-              <li class="member-follower"><a href="http://dribbble.com/One_div/followers">12 <span class="followers">followers</span></a></li>
-            </ul>
-          </div>
-   -->
-        </div>
-  
-      </li>
-      <li class="event" data-date="8:30 - 9:30pm">
-        <div class="member-infos">
-          <h1 class='member-title'>Closing Ceremony</h1>
-          <h2 class="member-location "><span class='entypo-location'></span>Nantes, France</h2>
-  
-  <!--         <ul class="member-contact">
-            <li class="member-website"><a class="entypo-globe" target="_blank" href="http://www.barneyparker.com"></a></li>
-            <li class="member-twitter"><a class="entypo-twitter" target="_blank" href="https://twitter.com/barney_parker"></a></li>
-            <li class="member-hire"><a class="entypo-mail" target="_blank" href="mailto://barney@barneyparker.com"></a></li>
-          </ul>
-  
-          <div class="member-parameters">
-            <a href="" class="follow entypo-plus"></a>
-            <a href="" class="options entypo-cog"></a>
-            <ul class="member-socials">
-              <li class="member-shots-number"><a href="http://dribbble.com/One_div">3 <span class="shots-number">shots</span></a></li>
-              <li class="member-follower"><a href="http://dribbble.com/One_div/followers">12 <span class="followers">followers</span></a></li>
-            </ul>
-          </div>
-   -->
-
-        </div>
-      </li>
-    </ul>
-  </div>
+    </li>
+  </ul>
+</div>      
 <script>
-    var title="!!!!!!!!";
-    var date="6:30-7:00pm";
-    var loc="London";
-document.getElementById("tl").innerHTML+=
-"<li class=\"event\" data-date="+date+"><div class=\"member-infos\"><h1 class=\"member-title\"><span>"+title+"<\/span><\/h1><\/div><\/li>";
+const myclass=require('../myclass');
+var event1 = new myclass.Note;
+event1.title = "XXXXNOTE!";
+event1.lastOpen = 7;
+
+var event2 = new myclass.Note;
+event2.title = "SOFTWARE ENGINEERING!!!!";
+event2.lastOpen = 12;
+
+var event3 = new myclass.Note;
+event3.title = "!!!!!!!!!!!!!!!!!!!!";
+event3.lastOpen = 17;
+
+var myBook = new myclass.NoteList;
+myBook.addNote(event1);
+myBook.addNote(event2);
+myBook.addNote(event3);
+
+for(var i=0; i <myBook.notes.length;i++){
+	document.getElementById("tl").innerHTML+=
+		"<li class=\"event\" data-date="+myBook.notes[i].lastOpen+"><div class=\"member-infos\"><h1 class=\"member-title\"><span>"+myBook.notes[i].title+"<\/span><\/h1><\/div><\/li>";
+}
 </script>
 
 </body>
