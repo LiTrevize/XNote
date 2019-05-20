@@ -24,9 +24,10 @@ module.exports = {
             i=this.indexOf(mynote)
             if(i>=0){
                 this.notes[i].title=mynote.title
-                this.notes[i].content=mynote.content
+                this.notes[i].content=""
                 this.notes[i].words=mynote.words
-                // myBook[i].TotalTime=mynote.TotalTime
+                this.notes[i].lastOpen=mynote.lastOpen
+                this.notes[i].TotalTime=mynote.TotalTime
             }else this.notes.push(mynote);
         }
         this.indexOf=function(mynote){
@@ -37,8 +38,14 @@ module.exports = {
             }
             return -1
         }
+        this.get=function(i=0){
+            if(i<=this.notes.length)
+                return this.notes[i]
+            else
+                return null
+        }
         this.parse=function(str){
-            console.log(str)
+            // console.log(str)
             this.notes=JSON.parse(str).notes
         }
         this.sort=function(){

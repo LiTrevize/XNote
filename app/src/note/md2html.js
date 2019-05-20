@@ -80,10 +80,12 @@ marked.setOptions({
       };
     }
 
-  function test(){
-    var ipcRenderer=require('electron').ipcRenderer
-    ipcRenderer.sendSync('pdf','testtesttesttest')
-  }
+  // function test(){
+  //   var ipcRenderer=require('electron').ipcRenderer
+  //   ipcRenderer.sendSync('pdf','testtesttesttest')
+  // }
+
+
 	function downloadPDF(){
 
 

@@ -5,7 +5,7 @@ mynote=new myclass.Note()
 ipcRenderer.on('loadNote',function(event,note){
     console.log(note.content)
     console.log('fjdsklfj')
-    document.getElementById('content').innerText=note.content
+    document.getElementById('content').value=note.content
     mynote=note
 })
 

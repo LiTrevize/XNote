@@ -7,8 +7,9 @@ var globalShortcut = require('electron').globalShortcut
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 var myBook=new myclass.NoteList()
-var win2note=new Array()
+var win2note=[-1]
 var curWinId=null
+var preWinId
 
 // file system
 var fs=require("fs")
@@ -53,7 +54,8 @@ function loadJson(filename="saves/record.json"){
 // myBook.addNote(event3);
 
 
-
+// init
+myBook.parse(loadFile('saves/record.json'))
 
 
 var template = [
@@ -71,12 +73,27 @@ var template = [
               click:function(){
                 var path=openFileDialog()[0]
                 var content=loadFile(path)
-                console.log(path)
+                // console.log(path)
                 var note= new myclass.Note()
                 note.content=content
-                note.title='testNote'
-                note.lastOpen=1000
                 note.path=path
+                var i=myBook.indexOf(note)
+                if(i>=0){
+                  note.title=myBook.get(i).title
+                  note.TotalTime=myBook.get(i).TotalTime
+                  note.lastOpen=getCurrentTime()
+                  myBook.get(i).lastOpen=note.lastOpen
+                }else{
+                  var title=path.split('\\')
+                  title=title[title.length-1]
+                  title=title.split('.')
+                  title=title[0]
+                  note.title=title
+                  note.lastOpen=getCurrentTime()
+                  if(!note.TotalTime) note.TotalTime=0;
+                  myBook.updateNote(note)
+                }
+                // title
                 createNotePage(note)
               }
           },
@@ -169,9 +186,8 @@ var Menu = require('electron').Menu;
 var menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
-// init
-myBook.parse(loadFile('saves/record.json'))
-console.log(typeof(myBook))
+
+
 
 function createWindow () {
   // Create the browser window.
@@ -191,7 +207,7 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  win2note[mainWindow.id]=null
+  win2note[mainWindow.id]=-1
   curWinId=mainWindow.id
 
   // console.log(webContents.getFocusedWebContents())
@@ -202,7 +218,7 @@ function createWindow () {
   
   
   mainWindow.on('focus',function(){
-    console.log('home')
+    console.log(mainWindow.id)
   })
 
   // mainWindow.on('did-finish-load',myclass.UpdateTimeLine(notelist))
@@ -268,8 +284,12 @@ var ipc=require('electron').ipcMain;
 ipc.on('saveNote',function(event,mynote){
   // console.log(BrowserWindow.getFocusedWindow().webContents)
   // BrowserWindow.fromId(curWinId).webContents.send('save')
-  saveToFile(mynote.path,mynote.content)
-  // else
+  if(!mynote.path){
+    var path=openSaveDialog()
+    if(path) mynote.path=path
+    else return
+  }
+  saveToFile(mynote.path,mynote.content);
   myBook.updateNote(mynote)
   saveToJson("saves/record.json",myBook)
 })
@@ -287,7 +307,17 @@ function openFileDialog(){
     ],
     properties: ['openFile']
   })
-  // can add a filter
+  return path
+}
+function openSaveDialog(){
+  const dialog=require('electron').dialog
+  var path=dialog.showSaveDialog({
+    filters: [
+      { name: 'Markdown', extensions: ['md', 'txt'] },
+      { name: 'All Files', extensions: ['*'] }
+    ],
+    properties: ['openDirectory']
+  })
   return path
 }
 
@@ -295,6 +325,7 @@ function createNotePage(note=new myclass.Note()){
   var winNote=new BrowserWindow({
     width: 800,
     height: 600,
+    title: note.title,
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false
@@ -310,19 +341,29 @@ function createNotePage(note=new myclass.Note()){
 
   // send message to load note
   winNote.webContents.on('did-finish-load',function(){
-      console.log("ready to show")
+      // console.log("ready to show")
       winNote.webContents.send('loadNote',note)
   })
 
   // focus
   winNote.on('focus',function(){
+    console.log(winNote.id)
     curWinId=winNote.id
-    // console.log(curWinId)
+    thisNote=myBook.notes[win2note[curWinId]]
+    thisNote.lastOpen=getCurrentTime()
   })
   winNote.on('blur',function(){
-    var cur=getCurrentTime()
-    thisNote=myBook.notes[winNote.id]
-    thisNote.TotalTime += (cur-thisNote.lastOpen)
+    var curtime=getCurrentTime()
+    thisNote=myBook.get(win2note[curWinId])
+    thisNote.TotalTime += (curtime-thisNote.lastOpen)
+  })
+
+  winNote.on('close', function () {
+    var curtime=getCurrentTime()
+    thisNote=myBook.get(win2note[curWinId])
+    thisNote.TotalTime += (curtime-thisNote.lastOpen)
+    // console.log(thisNote.TotalTime)
+    winNote = null
   })
 
   // Emitted when the window is closed.
@@ -330,6 +371,10 @@ function createNotePage(note=new myclass.Note()){
       // Dereference the window object, usually you would store windows
       // in an array if your app supports multi windows, this is the time
       // when you should delete the corresponding element.
+      var curtime=getCurrentTime()
+      thisNote=myBook.get(win2note[preWinId])
+      thisNote.TotalTime += (curtime-thisNote.lastOpen)
+      console.log(thisNote.TotalTime)
       winNote = null
   })
 }
@@ -345,7 +390,7 @@ function createPage(htmlpath=""){
     }
   })
   winNote.loadFile(htmlpath)
-  win2note.push(winNote)
+  // win2note.push(winNote)
   // Open the DevTools.
   winNote.webContents.openDevTools()
 
@@ -369,6 +414,5 @@ function createPage(htmlpath=""){
 // time record
 function getCurrentTime(){
   var cur=new Date()
-  var ret=console.log(cur.getTime())
-  return ret
+  return cur.getTime()
 }
