@@ -21,14 +21,16 @@ module.exports = {
         }
         this.updateNote=function(mynote){
             if(!mynote) return
-            if(this.indexOf(mynote)!=-1){
-                myBook[i].title=mynote.title
-                myBook[i].words=mynote.words
+            i=this.indexOf(mynote)
+            if(i>=0){
+                this.notes[i].title=mynote.title
+                this.notes[i].content=mynote.content
+                this.notes[i].words=mynote.words
                 // myBook[i].TotalTime=mynote.TotalTime
             }else this.notes.push(mynote);
         }
         this.indexOf=function(mynote){
-            for(var i=0;i<this.length;i++){
+            for(var i=0;i<this.notes.length;i++){
                 if(this.notes[i].path==mynote.path){
                   return i
                 }
