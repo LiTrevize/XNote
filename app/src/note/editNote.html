@@ -17,8 +17,13 @@
 <body id="edit">
 
 <div class="search" class = "top">
+<<<<<<< HEAD
+  <input type="search" class="search-box" id="Keyword" placeholder="KEYWORD" onkeydown="if(event.keyCode==13) SearchKeywords()" />
+  <span class="search-button">
+=======
   <input type="search" class="search-box" />
   <span class="search-button" onclick="saveMyNote">
+>>>>>>> 19ffd8a6a5f5c16914d7813db7962776bb12fb4d
     <span class="search-icon"></span>
   </span>
 </div>
@@ -34,7 +39,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-<title>GitHub Markdown CSS demo</title>
+<title>EditNote</title>
 <link rel="stylesheet" href="https://sindresorhus.com/github-markdown-css/github-markdown.css">
 <style>
 	@media (min-width: 768px) {
@@ -56,4 +61,27 @@
 </html>
 </script>
 <script src="md2html.js"></script>
+<script>
+  function SearchKeywords()
+  {
+    var contents = document.getElementById("content").value;
+       var text = document.getElementById("Keyword").value;
+       var re = new RegExp(text,'g');
+       re.exec(contents);
+       document.write("contents："+contents);
+       document.write("text"+text);
+       document.write("位置在："+re.lastIndex);
+  }
+</script>
+<!-- <script>
+       var typingContent = document.getElementById("content");
+       var contents = typingContent.innerHTML;
+       var text = document.getElementById("text");
+       text.onkeyup= function() {
+         var value = text.value;
+         var values = contents.split(value);
+         typingContent.innerHTML = values.join('<span style="background:red;">' + value + '</span>');
+       };
+    </script>
+ -->
 </body>
