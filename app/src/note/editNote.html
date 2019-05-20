@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>xNote Markdown2Html+PDF</title>
-    <script>window.$ = window.jQuery = require("./jquery.min.js");</script>
-    <script src="editNote.js"></script>
+		<script>window.$ = window.jQuery = require("./jquery.min.js");</script>
+		<script src="editNote.js"></script>
+		<script src="../menu.js"></script>
 	<script src="html2canvas.js"></script>
 	<script src="jsPdf.debug.js"></script>
     <script src="highlight.min.js"></script>
@@ -17,8 +18,13 @@
 <body id="edit">
 
 <div class="search" class = "top">
+<<<<<<< HEAD
   <input type="search" class="search-box" id="Keyword" placeholder="KEYWORD" onkeydown="if(event.keyCode==13) SearchKeywords()" />
   <span class="search-button">
+=======
+  <input type="search" class="search-box" />
+  <span class="search-button" onclick="saveMyNote">
+>>>>>>> 19ffd8a6a5f5c16914d7813db7962776bb12fb4d
     <span class="search-icon"></span>
   </span>
 </div>

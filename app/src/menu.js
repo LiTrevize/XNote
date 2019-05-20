@@ -8,8 +8,7 @@ var template = [
             {
                 label:'New',
                 click:function(){
-                    const ipcRenderer = require('electron').ipcRenderer;
-                    console.log(ipcRenderer.sendSync('newNote'))
+                    createNotePage(new myclass.Note());
                 }
             },
             {
@@ -23,7 +22,8 @@ var template = [
                 label:'Save',
                 click:function(){
                     const ipcRenderer = require('electron').ipcRenderer;
-                    console.log(ipcRenderer.sendSync('saveNote',mynote))
+
+                    console.log(ipcRenderer.sendSync('saveNote',mynote));
                 }
             },
             {
@@ -88,7 +88,6 @@ var template = [
                 label:'test',
                 click:function(){
                     console.log('test')
-                    console.log(document.head.innerText)
                 }
             },
             {
