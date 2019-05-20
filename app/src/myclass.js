@@ -7,8 +7,11 @@ module.exports = {
         this.words=0
         this.path=""
         this.content=""
-        this.getCounts=function(){
-            getCounts
+
+        this.getCounts=function()
+        {
+        	var x=document.getElementById("content").value
+        	return x.length
         }
     },
     NoteList: function(){

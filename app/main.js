@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, webContents} = require('electron');
 const myclass=require('./src/myclass')
 var globalShortcut = require('electron').globalShortcut
 
@@ -28,6 +28,119 @@ myBook.addNote(event2);
 myBook.addNote(event3);
 
 
+var template = [
+  {
+      label: 'File',
+      submenu:[
+          {
+              label:'New',
+              click:function(){
+                  createNotePage(new myclass.Note());
+              }
+          },
+          {
+              label:'Open',
+              click:function(){
+                var path=openFileDialog()[0]
+                var content=loadFile(path)
+                console.log(path)
+                var note= new myclass.Note()
+                note.content=content
+                note.title='testNote'
+                note.lastOpen=1000
+                note.path=path
+                createNotePage(note)
+              }
+          },
+          {
+              label:'Save',
+              click:function(){
+                  
+              }
+          },
+          {
+              label:'SaveAll'
+          },
+          {
+              type: 'separator'
+          },
+          {
+              label:'Export'
+          },
+          {
+              type: 'separator'
+          },
+          {
+              label:'Exit'
+          }
+      ],
+  },
+  {
+      label:'Edit',
+      submenu:[
+          {
+              role:'undo'
+          },
+          {
+              role:'redo'
+          },
+          {
+              type:'separator'
+          },
+          {
+              role:'cut'
+          },
+          {
+              role:'copy'
+          },
+          {
+              role:'paste'
+          },
+          {
+              type:'separator'
+          },
+          {
+              role:'selectall'
+          },
+          {
+              role:'minimize'
+          },
+          {
+              role:'close'
+          }
+      ]
+  },
+  {
+      label:'View'
+  },
+  {
+      label:'Help',
+      submenu:[
+          {
+              label:'test',
+              click:function(){
+                  console.log('test')
+                  console.log(document.head.innerText)
+              }
+          },
+          {
+              label:'timeline',
+              click:function(){
+                  const ipcRenderer = require('electron').ipcRenderer;
+                  console.log(ipcRenderer.sendSync('timeline'))
+              }
+          }
+      ]
+  }
+];
+
+var Menu = require('electron').Menu;
+var menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
+
+
+
 
 function createWindow () {
   // Create the browser window.
@@ -50,12 +163,13 @@ function createWindow () {
   win2note[mainWindow.id]=null
   curWinId=mainWindow.id
 
+  console.log(webContents.getFocusedWebContents())
   // load timeline
   mainWindow.webContents.on('did-finish-load',function(){
     mainWindow.webContents.send('loadtl',myBook)
   })
   
-
+  
   mainWindow.on('focus',function(){
     console.log('home')
   })
@@ -100,8 +214,9 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 // Listening to Events
-var ipc=require('electron').ipcMain;
 
+var ipc=require('electron').ipcMain;
+/*
 ipc.on('openNote',function(event){
   var path=openFileDialog()[0]
   var content=loadFile(path)
@@ -130,7 +245,7 @@ ipc.on('saveNote',function(event,mynote){
 ipc.on('timeline',function(event){
   createPage('src/record/timeline.html')
 })
-
+*/
 function openFileDialog(){
   const dialog=require('electron').dialog
   var path=dialog.showOpenDialog({
