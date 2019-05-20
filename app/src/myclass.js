@@ -20,6 +20,7 @@ module.exports = {
             this.notes.push(mynote)
         }
         this.updateNote=function(mynote){
+            if(!mynote) return
             if(this.indexOf(mynote)!=-1){
                 myBook[i].title=mynote.title
                 myBook[i].words=mynote.words
@@ -33,6 +34,10 @@ module.exports = {
                 }
             }
             return -1
+        }
+        this.parse=function(str){
+            console.log(str)
+            this.notes=JSON.parse(str).notes
         }
         this.sort=function(){
             

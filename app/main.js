@@ -10,22 +10,50 @@ var myBook=new myclass.NoteList()
 var win2note=new Array()
 var curWinId=null
 
+// file system
+var fs=require("fs")
+
+function saveToFile(filename="saves/test.txt",content="This is a test"){
+    fs.writeFile(filename,content,function(err){
+        if(err) console.log("Fail to save the file")
+    })
+}
+function loadFile(filename="saves/test.txt"){
+    var content=fs.readFileSync(filename,"utf-8")
+    // console.log(content)
+    return content
+}
+function saveToJson(filename="saves/test.json",jsonData={"name":"test","num":[1,2,3]}){
+    fs.writeFile(filename,JSON.stringify(jsonData),function(err){
+        if(err) console.log("Fail to save the file")
+    })
+}
+function loadJson(filename="saves/record.json"){
+    content=fs.readFileSync(filename,"utf-8")
+    // console.log('load json')
+    // console.log(JSON.parse(content))
+    return JSON.parse(content)
+}
+
 // test
-var event1 = new myclass.Note;
-event1.title = "XXXXNOTE!";
-event1.lastOpen = 7;
+// var event1 = new myclass.Note;
+// event1.title = "XXXXNOTE!";
+// event1.lastOpen = 7;
 
-var event2 = new myclass.Note;
-event2.title = "SOFTWARE ENGINEERING!!!!";
-event2.lastOpen = 12;
+// var event2 = new myclass.Note;
+// event2.title = "SOFTWARE ENGINEERING!!!!";
+// event2.lastOpen = 12;
 
-var event3 = new myclass.Note;
-event3.title = "!!!!!!!!!!!!!!!!!!!!";
-event3.lastOpen = 17;
+// var event3 = new myclass.Note;
+// event3.title = "!!!!!!!!!!!!!!!!!!!!";
+// event3.lastOpen = 17;
 
-myBook.addNote(event1);
-myBook.addNote(event2);
-myBook.addNote(event3);
+// myBook.addNote(event1);
+// myBook.addNote(event2);
+// myBook.addNote(event3);
+
+
+
 
 
 var template = [
@@ -55,7 +83,9 @@ var template = [
           {
               label:'Save',
               click:function(){
-                  
+                // console.log('receive save')
+                // console.log(BrowserWindow.getFocusedWindow().webContents)
+                BrowserWindow.fromId(curWinId).webContents.send('fetchNote')
               }
           },
           {
@@ -134,13 +164,14 @@ var template = [
   }
 ];
 
+
 var Menu = require('electron').Menu;
 var menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
-
-
-
+// init
+myBook.parse(loadFile('saves/record.json'))
+console.log(typeof(myBook))
 
 function createWindow () {
   // Create the browser window.
@@ -163,7 +194,7 @@ function createWindow () {
   win2note[mainWindow.id]=null
   curWinId=mainWindow.id
 
-  console.log(webContents.getFocusedWebContents())
+  // console.log(webContents.getFocusedWebContents())
   // load timeline
   mainWindow.webContents.on('did-finish-load',function(){
     mainWindow.webContents.send('loadtl',myBook)
@@ -193,6 +224,7 @@ app.on('ready', function(){
     console.log('ctrl+s')
     BrowserWindow.fromId(curWinId).send("fetchNote")
   })
+
   createWindow()
 })
 
@@ -216,36 +248,36 @@ app.on('activate', function () {
 // Listening to Events
 
 var ipc=require('electron').ipcMain;
-/*
-ipc.on('openNote',function(event){
-  var path=openFileDialog()[0]
-  var content=loadFile(path)
-  console.log(path)
-  var note= new myclass.Note()
-  note.content=content
-  note.title='testNote'
-  note.lastOpen=getCurrentTime()
-  note.path=path
-  createNotePage(note)
-})
 
-ipc.on('newNote',function(event){
-  createNotePage(new myclass.Note())
-})
+// ipc.on('openNote',function(event){
+//   var path=openFileDialog()[0]
+//   var content=loadFile(path)
+//   console.log(path)
+//   var note= new myclass.Note()
+//   note.content=content
+//   note.title='testNote'
+//   note.lastOpen=getCurrentTime()
+//   note.path=path
+//   createNotePage(note)
+// })
+
+// ipc.on('newNote',function(event){
+//   createNotePage(new myclass.Note())
+// })
 
 ipc.on('saveNote',function(event,mynote){
-  console.log('receive save')
   // console.log(BrowserWindow.getFocusedWindow().webContents)
   // BrowserWindow.fromId(curWinId).webContents.send('save')
   saveToFile(mynote.path,mynote.content)
   // else
   myBook.updateNote(mynote)
+  saveToJson("saves/record.json",myBook)
 })
 
-ipc.on('timeline',function(event){
-  createPage('src/record/timeline.html')
-})
-*/
+// ipc.on('timeline',function(event){
+//   createPage('src/record/timeline.html')
+// })
+
 function openFileDialog(){
   const dialog=require('electron').dialog
   var path=dialog.showOpenDialog({
@@ -339,27 +371,4 @@ function getCurrentTime(){
   var cur=new Date()
   var ret=console.log(cur.getTime())
   return ret
-}
-
-
-var fs=require("fs")
-
-function saveToFile(filename="saves/test.txt",content="This is a test"){
-    fs.writeFile(filename,content,function(err){
-        if(err) console.log("Fail to save the file")
-    })
-}
-function loadFile(filename="saves/test.txt"){
-    var content=fs.readFileSync(filename,"utf-8")
-    // console.log(content)
-    return content
-}
-function saveToJson(filename="saves/test.json",jsonData={"name":"test","num":[1,2,3]}){
-    fs.writeFile(filename,JSON.stringify(jsonData),function(err){
-        if(err) console.log("Fail to save the file")
-    })
-}
-function loadJson(filename="saves/test.json"){
-    content=fs.readFileSync(filename,"utf-8")
-    return content
 }
