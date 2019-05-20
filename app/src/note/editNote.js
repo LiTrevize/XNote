@@ -5,10 +5,19 @@ mynote=new myclass.Note()
 ipcRenderer.on('loadNote',function(event,note){
     console.log(note.content)
     console.log('fjdsklfj')
-    document.getElementById('content').innerHTML=note.content
+    document.getElementById('content').innerText=note.content
     mynote=note
 })
 
-ipcRenderer.on('saveNote',function(event){
-    mynote.content=document.getElementById()
+ipcRenderer.on('fetchNote',function(event){
+    saveMyNote()
 })
+
+function saveMyNote(){
+    mynote.content=document.getElementById('content').value
+    // console.log(document.getElementById('content').value)
+    // console.log(mynote.content)
+    // console.log('save')
+    mynote.words=mynote.getCounts
+    ipcRenderer.sendSync('saveNote',mynote)
+}

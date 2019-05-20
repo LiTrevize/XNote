@@ -88,7 +88,6 @@ var template = [
                 label:'test',
                 click:function(){
                     console.log('test')
-                    console.log(document.head.innerText)
                 }
             },
             {

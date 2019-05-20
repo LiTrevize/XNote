@@ -1,9 +1,4 @@
 module.exports = {
-    Record: function(){
-        this.lastOpen=0
-        this.TotalTime=0
-        this.record=new Array()
-    },
     Note: function(){
         // var title="" private
         this.title="" // public
@@ -12,12 +7,29 @@ module.exports = {
         this.words=0
         this.path=""
         this.content=""
-        this.getCounts=function(){}
+        this.getCounts=function(){
+            getCounts
+        }
     },
     NoteList: function(){
         this.notes=new Array()
-        this.addNote=function (note=new Note()){
-            this.notes.push(note)
+        this.addNote=function (mynote=new Note()){
+            this.notes.push(mynote)
+        }
+        this.updateNote=function(mynote){
+            if(this.indexOf(mynote)!=-1){
+                myBook[i].title=mynote.title
+                myBook[i].words=mynote.words
+                // myBook[i].TotalTime=mynote.TotalTime
+            }else this.notes.push(mynote);
+        }
+        this.indexOf=function(mynote){
+            for(var i=0;i<this.length;i++){
+                if(this.notes[i].path==mynote.path){
+                  return i
+                }
+            }
+            return -1
         }
         this.sort=function(){
             

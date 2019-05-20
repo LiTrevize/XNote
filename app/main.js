@@ -1,14 +1,14 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const myclass=require('./src/myclass')
+var globalShortcut = require('electron').globalShortcut
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 var myBook=new myclass.NoteList()
-var windows=new Array()
-var curNoteIndex=-1
-var lastNoteIndex=0
-var curWin=null
+var win2note=new Array()
+var curWinId=null
 
 // test
 var event1 = new myclass.Note;
@@ -47,7 +47,8 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  curWin=mainWindow
+  win2note[mainWindow.id]=null
+  curWinId=mainWindow.id
 
   // load timeline
   mainWindow.webContents.on('did-finish-load',function(){
@@ -73,12 +74,19 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function(){
+  var ret = globalShortcut.register('ctrl+s',function(){
+    console.log('ctrl+s')
+    BrowserWindow.fromId(curWinId).send("fetchNote")
+  })
+  createWindow()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  saveToJson("saves/record.json",myBook)
   if (process.platform !== 'darwin') app.quit()
 })
 
@@ -101,7 +109,7 @@ ipc.on('openNote',function(event){
   var note= new myclass.Note()
   note.content=content
   note.title='testNote'
-  note.lastOpen=1000
+  note.lastOpen=getCurrentTime()
   note.path=path
   createNotePage(note)
 })
@@ -110,10 +118,13 @@ ipc.on('newNote',function(event){
   createNotePage(new myclass.Note())
 })
 
-ipc.on('saveNote',function(event){
-  curWin.webContents.send("saveNote")
-  // console.log(mynote.content)
-  // saveToFile(mynote.path,mynote.content)
+ipc.on('saveNote',function(event,mynote){
+  console.log('receive save')
+  // console.log(BrowserWindow.getFocusedWindow().webContents)
+  // BrowserWindow.fromId(curWinId).webContents.send('save')
+  saveToFile(mynote.path,mynote.content)
+  // else
+  myBook.updateNote(mynote)
 })
 
 ipc.on('timeline',function(event){
@@ -133,7 +144,7 @@ function openFileDialog(){
   return path
 }
 
-function createNotePage(note=new Note()){
+function createNotePage(note=new myclass.Note()){
   var winNote=new BrowserWindow({
     width: 800,
     height: 600,
@@ -143,8 +154,9 @@ function createNotePage(note=new Note()){
     }
   })
   winNote.loadFile('src/note/editNote.html')
-  windows.push(winNote)
-  curWin=winNote
+  // windows.push(winNote)
+  curWinId=winNote.id
+  win2note[curWinId]=myBook.indexOf(note)
   // Open the DevTools.
   winNote.webContents.openDevTools()
 
@@ -157,7 +169,13 @@ function createNotePage(note=new Note()){
 
   // focus
   winNote.on('focus',function(){
-    curWin=winNote
+    curWinId=winNote.id
+    // console.log(curWinId)
+  })
+  winNote.on('blur',function(){
+    var cur=getCurrentTime()
+    thisNote=myBook.notes[winNote.id]
+    thisNote.TotalTime += (cur-thisNote.lastOpen)
   })
 
   // Emitted when the window is closed.
@@ -167,10 +185,8 @@ function createNotePage(note=new Note()){
       // when you should delete the corresponding element.
       winNote = null
   })
-
- 
-
 }
+
 
 function createPage(htmlpath=""){
   var winNote=new BrowserWindow({
@@ -182,7 +198,7 @@ function createPage(htmlpath=""){
     }
   })
   winNote.loadFile(htmlpath)
-  windows.push(winNote)
+  win2note.push(winNote)
   // Open the DevTools.
   winNote.webContents.openDevTools()
 
@@ -201,9 +217,15 @@ function createPage(htmlpath=""){
       // winNote = null
   })
 
- 
-
 }
+
+// time record
+function getCurrentTime(){
+  var cur=new Date()
+  var ret=console.log(cur.getTime())
+  return ret
+}
+
 
 var fs=require("fs")
 

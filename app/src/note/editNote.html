@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>xNote Markdown2Html+PDF</title>
-    <script>window.$ = window.jQuery = require("./jquery.min.js");</script>
-    <script src="editNote.js"></script>
+		<script>window.$ = window.jQuery = require("./jquery.min.js");</script>
+		<script src="editNote.js"></script>
+		<script src="../menu.js"></script>
 	<script src="html2canvas.js"></script>
 	<script src="jsPdf.debug.js"></script>
     <script src="highlight.min.js"></script>
@@ -18,7 +19,7 @@
 
 <div class="search" class = "top">
   <input type="search" class="search-box" />
-  <span class="search-button">
+  <span class="search-button" onclick="saveMyNote">
     <span class="search-icon"></span>
   </span>
 </div>
