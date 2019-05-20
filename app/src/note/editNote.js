@@ -9,6 +9,6 @@ ipcRenderer.on('loadNote',function(event,note){
     mynote=note
 })
 
-$('.search-button').click(function(){
-    $(this).parent().toggleClass('open');
-  });
+ipcRenderer.on('saveNote',function(event){
+    mynote.content=document.getElementById()
+})

@@ -9,8 +9,10 @@ module.exports = {
         this.title="" // public
         this.lastOpen=0
         this.TotalTime=0
+        this.words=0
         this.path=""
         this.content=""
+        this.getCounts=function(){}
     },
     NoteList: function(){
         this.notes=new Array()

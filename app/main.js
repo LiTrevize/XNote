@@ -6,6 +6,9 @@ const myclass=require('./src/myclass')
 let mainWindow
 var myBook=new myclass.NoteList()
 var windows=new Array()
+var curNoteIndex=-1
+var lastNoteIndex=0
+var curWin=null
 
 // test
 var event1 = new myclass.Note;
@@ -43,6 +46,8 @@ function createWindow () {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
+
+  curWin=mainWindow
 
   // load timeline
   mainWindow.webContents.on('did-finish-load',function(){
@@ -88,6 +93,7 @@ app.on('activate', function () {
 
 // Listening to Events
 var ipc=require('electron').ipcMain;
+
 ipc.on('openNote',function(event){
   var path=openFileDialog()[0]
   var content=loadFile(path)
@@ -96,16 +102,16 @@ ipc.on('openNote',function(event){
   note.content=content
   note.title='testNote'
   note.lastOpen=1000
-  note.path="D:/Projects/XNote/app/saves/test.txt"
+  note.path=path
   createNotePage(note)
 })
 
 ipc.on('newNote',function(event){
-  createNotePage('')
+  createNotePage(new myclass.Note())
 })
 
-ipc.on('saveNote',function(event,mynote){
-  console.log(mynote.content)
+ipc.on('saveNote',function(event){
+  curWin.webContents.send("saveNote")
   // console.log(mynote.content)
   // saveToFile(mynote.path,mynote.content)
 })
@@ -138,6 +144,7 @@ function createNotePage(note=new Note()){
   })
   winNote.loadFile('src/note/editNote.html')
   windows.push(winNote)
+  curWin=winNote
   // Open the DevTools.
   winNote.webContents.openDevTools()
 
@@ -148,12 +155,17 @@ function createNotePage(note=new Note()){
       winNote.webContents.send('loadNote',note)
   })
 
+  // focus
+  winNote.on('focus',function(){
+    curWin=winNote
+  })
+
   // Emitted when the window is closed.
   winNote.on('closed', function () {
       // Dereference the window object, usually you would store windows
       // in an array if your app supports multi windows, this is the time
       // when you should delete the corresponding element.
-      // winNote = null
+      winNote = null
   })
 
  
