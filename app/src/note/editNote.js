@@ -18,6 +18,6 @@ function saveMyNote(){
     // console.log(document.getElementById('content').value)
     // console.log(mynote.content)
     // console.log('save')
-    mynote.words=mynote.getCounts
+    mynote.words=mynote.content.split(' ').join('').length
     ipcRenderer.sendSync('saveNote',mynote)
 }

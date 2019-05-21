@@ -7,11 +7,18 @@ module.exports = {
         this.words=0
         this.path=""
         this.content=""
+        this.desc="No description."
 
         this.getCounts=function()
         {
-        	var x=document.getElementById("content").value
-        	return x.length
+        	return this.content.length
+        }
+        this.toStrTime=function(time){
+            if(!time) time=this.lastOpen
+            var t=new Date(time)
+            var ret=t.getMonth()+' '+t.getDate()+' '+t.getHours()+' '+t.getMinutes()
+            console.log(ret)
+            return ret
         }
     },
     NoteList: function(){
@@ -47,6 +54,27 @@ module.exports = {
         this.parse=function(str){
             // console.log(str)
             this.notes=JSON.parse(str).notes
+        }
+        this.toStrTime=function(time){
+            var t=new Date(time)
+            var month=t.getMonth()
+            switch(month){
+                case 1:month='Jan';break;
+                case 2:month='Feb';break;
+                case 3:month='Mar';break;
+                case 4:month='Apr';break;
+                case 5:month='May';break;
+                case 6:month='Jun';break;
+                case 7:month='Jul';break;
+                case 8:month='Aug';break;
+                case 9:month='Sep';break;
+                case 10:month='Oct';break;
+                case 11:month='Nov';break;
+                case 12:month='Dec';break;
+            }
+            var ret=month+' '+t.getDate()+' '+t.getFullYear()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds()
+            console.log(ret)
+            return ret
         }
         this.sort=function(){
             
