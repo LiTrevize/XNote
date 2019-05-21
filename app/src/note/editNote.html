@@ -56,27 +56,6 @@
 </html>
 </script>
 <script src="md2html.js"></script>
-<script>
-  function SearchKeywords()
-  {
-    var contents = document.getElementById("content").value;
-    var text = document.getElementById("Keyword").value;
-    var re = new RegExp(text,'g');
-    re.exec(contents);
-    document.write("contents："+contents);
-    document.write("text"+text);
-    document.write("位置在："+re.lastIndex);
-  }
-</script>
-<!-- <script>
-       var typingContent = document.getElementById("content");
-       var contents = typingContent.innerHTML;
-       var text = document.getElementById("text");
-       text.onkeyup= function() {
-         var value = text.value;
-         var values = contents.split(value);
-         typingContent.innerHTML = values.join('<span style="background:red;">' + value + '</span>');
-       };
-    </script>
- -->
+
+
 </body>
