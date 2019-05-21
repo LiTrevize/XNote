@@ -176,6 +176,12 @@ var template = [
                   const ipcRenderer = require('electron').ipcRenderer;
                   console.log(ipcRenderer.sendSync('timeline'))
               }
+          },
+          {
+            label:'mindmap',
+            click:function(){
+                BrowserWindow.fromId(curWinId).webContents.send('fetchMindmap')
+            }
           }
       ]
   }
@@ -294,6 +300,16 @@ ipc.on('saveNote',function(event,mynote){
   saveToJson("saves/record.json",myBook)
 })
 
+
+ipc.on('showMindmap',function(event,mynote){
+  saveToFile('./saves/buffer.md',mynote.content)
+  createMindmap()
+})
+
+
+
+
+
 // ipc.on('timeline',function(event){
 //   createPage('src/record/timeline.html')
 // })
@@ -320,6 +336,39 @@ function openSaveDialog(){
   })
   return path
 }
+
+function createMindmap(){
+  var mindMap=new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      webSecurity: false
+    }
+  })
+  mindMap.loadFile('src/mindmap/mindmap.html')
+  //windows.push(mindMap)
+  curWin=mindMap
+  // Open the DevTools.
+  mindMap.webContents.openDevTools()
+
+
+  // focus
+  mindMap.on('focus',function(){
+    curWin=mindMap
+  })
+
+  // Emitted when the window is closed.
+  mindMap.on('closed', function () {
+      // Dereference the window object, usually you would store windows
+      // in an array if your app supports multi windows, this is the time
+      // when you should delete the corresponding element.
+      mindMap = null
+  })
+
+}
+
+
 
 function createNotePage(note=new myclass.Note()){
   var winNote=new BrowserWindow({

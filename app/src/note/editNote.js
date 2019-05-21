@@ -12,6 +12,11 @@ ipcRenderer.on('loadNote',function(event,note){
 ipcRenderer.on('fetchNote',function(event){
     saveMyNote()
 })
+ipcRenderer.on('fetchMindmap',function(event){
+    saveNotebuffer()
+})
+
+
 
 function saveMyNote(){
     mynote.content=document.getElementById('content').value
@@ -20,4 +25,10 @@ function saveMyNote(){
     // console.log('save')
     mynote.words=mynote.content.split(' ').join('').length
     ipcRenderer.sendSync('saveNote',mynote)
+}
+
+function saveNotebuffer(){
+    mynote.content=document.getElementById('content').value
+    mynote.words=mynote.content.split(' ').join('').length
+    ipcRenderer.sendSync('showMindmap',mynote)
 }
