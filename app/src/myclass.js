@@ -72,7 +72,7 @@ module.exports = {
                 case 11:month='Nov';break;
                 case 12:month='Dec';break;
             }
-            var ret=month+' '+t.getDate()+' '+t.getFullYear()+' '+t.getHours()+':'+t.getMinutes()+':'+t.getSeconds()
+            var ret=month+' '+t.getDate()+' '+t.getHours()+':'+t.getMinutes()
             console.log(ret)
             return ret
         }
