@@ -54,3 +54,16 @@ function searchAndHighlight(){
     contents=content.innerHTML.split(keyword)
     content.innerHTML=contents.join('<span style="background:yellow;">'+keyword+'</span>')
 }
+
+function stripHtml(htmlstr){
+    htmlstr=htmlstr.replace(/<br>/g,"\n")
+    htmlstr=htmlstr.replace(/<\/br>/g,"\n")
+    htmlstr=htmlstr.replace(/<[^>&^<]+>/g,"")
+    return htmlstr
+}
+
+function test(){
+    var keyword=document.getElementById('keyword').value
+    console.log(keyword)
+    console.log(stripHtml(keyword))
+}

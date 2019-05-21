@@ -69,7 +69,7 @@ var template = [
               }
           },
           {
-              label:'Open',
+              label:'Open...',
               click:function(){
                 var path=openFileDialog()[0]
                 var content=loadFile(path)
@@ -112,7 +112,27 @@ var template = [
               type: 'separator'
           },
           {
-              label:'Export'
+              label:'Export',
+              submenu:[
+                {
+                  label:'To Html...',
+                  click:function(){
+                    BrowserWindow.getFocusedWindow().webContents.send('exportTo','html')
+                  }
+                },
+                {
+                  label:'To Pdf...',
+                  click:function(){
+                    BrowserWindow.getFocusedWindow().webContents.send('exportTo','pdf')
+                  }
+                },
+                {
+                  label:'To Png...',
+                  click:function(){
+                    BrowserWindow.getFocusedWindow().webContents.send('exportTo','png')
+                  }
+                }
+              ]
           },
           {
               type: 'separator'

@@ -24,10 +24,23 @@ marked.setOptions({
       }
     });
 
-    $("#content").on("input  propertychange", function() {
-        var val = $(this).val();
-        $("#show").html(md.render(val));
-        // $("#show").html(marked(val));
+    function stripHtml(htmlstr=""){
+      htmlstr=htmlstr.replace(/<br>/g,"\n")
+      htmlstr=htmlstr.replace(/<\/br>/g,"\n")
+      htmlstr=htmlstr.replace(/<[^>&^<]+>/g,"")
+      return htmlstr
+    }
+
+    // textarea
+    // $("#content").on("input  propertychange", function() {
+    //     var val = $(this).val();
+    //     $("#show").html(md.render(val));
+    // });
+    // div
+    $("#content").on("keydown", function() {
+      var val = $(this).html();
+      val=stripHtml(val)
+      $("#show").html(md.render(val));
     });
 
     function downloadFile(fileName, content){
@@ -148,3 +161,18 @@ marked.setOptions({
 	  }
       })
 	}
+
+
+function Exporter(type){
+  this.type=type
+  this.export=function(){
+      if(type=='html') downloadHTML()
+      if(type=='pdf') downloadPDF()
+      if(type=='png') downloadPNG()
+  }
+}
+
+ipcRenderer.on('exportTo',function(event,type){
+  var exporter=new Exporter(type)
+  exporter.export()
+})

@@ -1,17 +1,24 @@
 const myclass=require('../myclass')
 
 const ipcRenderer = require('electron').ipcRenderer;
+
+
+
 mynote=new myclass.Note()
 ipcRenderer.on('loadNote',function(event,note){
-    console.log(note.content)
-    console.log('fjdsklfj')
-    document.getElementById('content').value=note.content
+    // console.log(note.content)
+    // console.log('fjdsklfj')
+    // document.getElementById('content').value=note.content
+    document.getElementById('content').innerText=note.content
     mynote=note
 })
 
 ipcRenderer.on('fetchNote',function(event){
     saveMyNote()
 })
+
+// on md2html.js
+// ipcRenderer.on('exportTo')
 
 function saveMyNote(){
     mynote.content=document.getElementById('content').value
