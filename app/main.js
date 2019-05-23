@@ -65,7 +65,8 @@ var template = [
           {
               label:'New',
               click:function(){
-                  createNotePage(new myclass.Note());
+                  // var note=new myclass.Note()
+                  createNotePage();
               }
           },
           {
@@ -82,6 +83,7 @@ var template = [
                   note.title=myBook.get(i).title
                   note.TotalTime=myBook.get(i).TotalTime
                   note.lastOpen=getCurrentTime()
+                  myBook.get(i).content=''
                   myBook.get(i).lastOpen=note.lastOpen
                 }else{
                   var title=path.split('\\')
@@ -231,7 +233,7 @@ function createWindow () {
   // mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   win2note[mainWindow.id]=-1
   curWinId=mainWindow.id
@@ -245,6 +247,7 @@ function createWindow () {
   
   mainWindow.on('focus',function(){
     console.log(mainWindow.id)
+    // mainWindow.webContents.send('loadtl',myBook)
   })
 
   // mainWindow.on('did-finish-load',myclass.UpdateTimeLine(notelist))
@@ -274,6 +277,7 @@ app.on('ready', function(){
 app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  
   saveToJson("saves/record.json",myBook)
   if (process.platform !== 'darwin') app.quit()
 })
@@ -370,7 +374,7 @@ function createMindmap(){
   //windows.push(mindMap)
   curWin=mindMap
   // Open the DevTools.
-  mindMap.webContents.openDevTools()
+  // mindMap.webContents.openDevTools()
 
 
   // focus
@@ -400,12 +404,16 @@ function createNotePage(note=new myclass.Note()){
       webSecurity: false
     }
   })
-  winNote.loadFile('src/note/editNote.html')
+  winNote.loadFile('src/note/editNote.html');
   // windows.push(winNote)
   curWinId=winNote.id
-  win2note[curWinId]=myBook.indexOf(note)
+  var idx=myBook.indexOf(note)
+  if(idx==-1){
+    myBook.addNote(note)
+    win2note[curWinId]=myBook.length-1
+  }else win2note[curWinId]=idx
   // Open the DevTools.
-  winNote.webContents.openDevTools()
+  // winNote.webContents.openDevTools()
 
 
   // send message to load note
@@ -461,7 +469,7 @@ function createPage(htmlpath=""){
   winNote.loadFile(htmlpath)
   // win2note.push(winNote)
   // Open the DevTools.
-  winNote.webContents.openDevTools()
+  // winNote.webContents.openDevTools()
 
 
   // send message to load note

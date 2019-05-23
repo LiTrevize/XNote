@@ -37,7 +37,12 @@ marked.setOptions({
     //     $("#show").html(md.render(val));
     // });
     // div
-    $("#content").on("keydown", function() {
+
+    // var val = $(this).html();
+    // val=stripHtml(val)
+    // $("#show").html(md.render(val));
+
+    $("#content").on("keyup", function() {
       var val = $(this).html();
       val=stripHtml(val)
       $("#show").html(md.render(val));

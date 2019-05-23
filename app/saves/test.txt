@@ -4,17 +4,6 @@ this is a test
 
 another test
 ## test
-fjsdklf
-djfkldj
-
-fjdklf
 
 $$\sum_{k_1}$$
 
-bkejkg
-
-a|b|c|
--|-|-
-刘备|哭|大哥
-关羽|打|二哥
-张飞|骂|三弟

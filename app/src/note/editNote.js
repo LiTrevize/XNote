@@ -21,12 +21,19 @@ ipcRenderer.on('fetchMindmap',function(event){
 })
 
 
+function stripHtml(htmlstr=""){
+    htmlstr=htmlstr.replace(/<br>/g,"\n")
+    htmlstr=htmlstr.replace(/<\/br>/g,"\n")
+    htmlstr=htmlstr.replace(/<[^>&^<]+>/g,"")
+    return htmlstr
+}
 
 // on md2html.js
 // ipcRenderer.on('exportTo')
 
 function saveMyNote(){
-    mynote.content=document.getElementById('content').value
+    mynote.content=document.getElementById('content').innerHTML
+    mynote.content=stripHtml(mynote.content)
     // console.log(document.getElementById('content').value)
     // console.log(mynote.content)
     // console.log('save')
@@ -35,32 +42,9 @@ function saveMyNote(){
 }
 
 function saveNotebuffer(){
-    mynote.content=document.getElementById('content').value
+    mynote.content=document.getElementById('content').innerHTML
+    mynote.content=stripHtml(mynote.content)
     mynote.words=mynote.content.split(' ').join('').length
     ipcRenderer.sendSync('showMindmap',mynote)
 }
 
-// Search and highligh
-
-
-function SearchKeywords()
-{
-    var contents = document.getElementById("content").value;
-    var text = document.getElementById("Keyword").value;
-    var re = new RegExp(text,'g');
-    re.exec(contents);
-    document.write("contents："+contents);
-    document.write("text"+text);
-    document.write("位置在："+re.lastIndex);
-}
-function highlight(){
-    var typingContent = document.getElementById("content");
-    var contents = typingContent.innerHTML;
-    var text = document.getElementById("text");
-    text.onkeyup= function() {
-        var value = text.value;
-        var values = contents.split(value);
-        typingContent.innerHTML = values.join('<span style="background:red;">' + value + '</span>');
-    };
-}
-    

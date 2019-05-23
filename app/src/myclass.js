@@ -110,3 +110,27 @@ module.exports = {
 // }
 
 // // 
+
+
+
+// function Note(){
+//     this.title="" // public
+//     this.lastOpen=0
+//     this.TotalTime=0
+//     this.words=0
+//     this.path=""
+//     this.content=""
+//     this.desc="No description."
+//     this.getCounts=function(){}
+//     this.toStrTime=function(time){}
+// }
+// function NoteList(){
+//     this.notes=new Array()
+//     this.addNote=function (mynote=new Note()){}
+//     this.updateNote=function(mynote){}
+//     this.indexOf=function(mynote){}
+//     this.get=function(i=0){}
+//     this.parse=function(str){}
+//     this.toStrTime=function(time){}
+//     this.sort=function(){}
+// }

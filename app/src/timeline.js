@@ -3,6 +3,7 @@ const ipcRenderer=require('electron').ipcRenderer
 
 ipcRenderer.on('loadtl',function(event,mybook=new myclass.NoteList()){
   // console.log('load timeline')
+  document.getElementById("TL").innerHTML=""
   var myBook=new myclass.NoteList()
   myBook.notes=mybook.notes
   for(var i=0; i < myBook.notes.length;i++){

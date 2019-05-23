@@ -15,18 +15,23 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+
+
 a,
 span,
 h1,
 h2,
 h3,
 span {
+  font-size: 14px;
   text-decoration: none;
   color: #999;
+  font-family: sans-serif;
 }
 
 a:hover {
   color: #777;
+  font-size: 16px;
 }
 
 h1 {
@@ -34,7 +39,7 @@ h1 {
   letter-spacing: 1.5px;
   color: #999;
   font-weight: 100;
-  font-size: 2.4em;
+  font-size: 2.8em;
   margin: 0;
   border-bottom: 1px solid #777;
   padding-bottom: 0.2em;
@@ -84,12 +89,13 @@ h2 {
 }
 
 .timeline .event:before {
-  left: -15em;
-  color: rgba(255, 255, 255, 0.8);
+  left: -14.5em;
+  color: rgba(222, 210, 210, 0.8);
   content: attr(data-date);
   text-align: right;
   font-weight: 100;
-  font-size: 0.9em;
+  font-size: 1em;
+  font-family: Arial;
   min-width: 9em;
 }
 
