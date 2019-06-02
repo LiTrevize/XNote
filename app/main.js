@@ -102,9 +102,8 @@ var template = [
           {
               label:'Save',
               click:function(){
-                // console.log('receive save')
-                // console.log(BrowserWindow.getFocusedWindow().webContents)
-                BrowserWindow.fromId(curWinId).webContents.send('fetchNote')
+                // BrowserWindow.fromId(curWinId).webContents.send('fetchNote')
+                BrowserWindow.getFocusedWindow().webContents.send('fetchNote')
               }
           },
           {
@@ -202,7 +201,8 @@ var template = [
           {
             label:'mindmap',
             click:function(){
-                BrowserWindow.fromId(curWinId).webContents.send('fetchMindmap')
+                // BrowserWindow.fromId(curWinId).webContents.send('fetchMindmap')
+                BrowserWindow.getFocusedWindow().webContents.send('fetchMindmap')
             }
           }
       ]
@@ -233,7 +233,7 @@ function createWindow () {
   // mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   win2note[mainWindow.id]=-1
   curWinId=mainWindow.id
@@ -247,6 +247,7 @@ function createWindow () {
   
   mainWindow.on('focus',function(){
     console.log(mainWindow.id)
+    
     // mainWindow.webContents.send('loadtl',myBook)
   })
 
@@ -265,7 +266,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', function(){
-  var ret = globalShortcut.register('ctrl+s',function(){
+    var ret = globalShortcut.register('ctrl+s',function(){
     console.log('ctrl+s')
     BrowserWindow.fromId(curWinId).send("fetchNote")
   })
@@ -277,7 +278,7 @@ app.on('ready', function(){
 app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  
+  myBook.sortNote()
   saveToJson("saves/record.json",myBook)
   if (process.platform !== 'darwin') app.quit()
 })
@@ -295,21 +296,12 @@ app.on('activate', function () {
 
 var ipc=require('electron').ipcMain;
 
-// ipc.on('openNote',function(event){
-//   var path=openFileDialog()[0]
-//   var content=loadFile(path)
-//   console.log(path)
-//   var note= new myclass.Note()
-//   note.content=content
-//   note.title='testNote'
-//   note.lastOpen=getCurrentTime()
-//   note.path=path
-//   createNotePage(note)
-// })
-
-// ipc.on('newNote',function(event){
-//   createNotePage(new myclass.Note())
-// })
+ipc.on('openNote',function(event,mynoteid){
+  myBook.notes[mynoteid].lastOpen=getCurrentTime()
+  var thisnote=myBook.notes[mynoteid]
+  thisnote.content=loadFile(thisnote.path)
+  createNotePage(thisnote)
+})
 
 ipc.on('saveNote',function(event,mynote){
   // console.log(BrowserWindow.getFocusedWindow().webContents)
@@ -372,14 +364,14 @@ function createMindmap(){
   })
   mindMap.loadFile('src/mindmap/mindmap.html')
   //windows.push(mindMap)
-  curWin=mindMap
+  curWinId=mindMap.id
   // Open the DevTools.
   // mindMap.webContents.openDevTools()
 
 
   // focus
   mindMap.on('focus',function(){
-    curWin=mindMap
+    curWinId=mindMap.id
   })
 
   // Emitted when the window is closed.
@@ -426,7 +418,7 @@ function createNotePage(note=new myclass.Note()){
   winNote.on('focus',function(){
     console.log(winNote.id)
     curWinId=winNote.id
-    thisNote=myBook.notes[win2note[curWinId]]
+    var thisNote=myBook.notes[win2note[curWinId]]
     thisNote.lastOpen=getCurrentTime()
   })
   winNote.on('blur',function(){

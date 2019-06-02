@@ -73,11 +73,20 @@ module.exports = {
                 case 12:month='Dec';break;
             }
             var ret=month+' '+t.getDate()+' '+t.getHours()+':'+t.getMinutes()
-            console.log(ret)
+            // console.log(ret)
             return ret
         }
-        this.sort=function(){
-            
+        this.sortNote=function(){
+            // remove note without path and rearrange notes in a descending order by its lastOpen
+            var i=0;
+            while(i<this.notes.length){
+                if(this.notes[i])
+                    if(this.notes[i].path)
+                        i++    
+                else
+                    this.notes.splice(i,1)
+            }
+            this.notes.sort(function(a,b){return b.lastOpen-a.lastOpen})
         }
     }
 }

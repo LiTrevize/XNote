@@ -38,13 +38,13 @@ function saveMyNote(){
     // console.log(mynote.content)
     // console.log('save')
     mynote.words=mynote.content.split(' ').join('').length
-    ipcRenderer.sendSync('saveNote',mynote)
+    ipcRenderer.send('saveNote',mynote)
 }
 
 function saveNotebuffer(){
     mynote.content=document.getElementById('content').innerHTML
     mynote.content=stripHtml(mynote.content)
     mynote.words=mynote.content.split(' ').join('').length
-    ipcRenderer.sendSync('showMindmap',mynote)
+    ipcRenderer.send('showMindmap',mynote)
 }
 
