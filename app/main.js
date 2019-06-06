@@ -325,7 +325,6 @@ ipc.on('showMindmap',function(event,mynote){
 
 
 
-
 // ipc.on('timeline',function(event){
 //   createPage('src/record/timeline.html')
 // })
@@ -400,10 +399,14 @@ function createNotePage(note=new myclass.Note()){
   // windows.push(winNote)
   curWinId=winNote.id
   var idx=myBook.indexOf(note)
+  
   if(idx==-1){
     myBook.addNote(note)
-    win2note[curWinId]=myBook.length-1
+    win2note[curWinId]=myBook.getlen()-1
   }else win2note[curWinId]=idx
+  console.log('create window')
+  // console.log(myBook.length)
+  // console.log(win2note)
   // Open the DevTools.
   // winNote.webContents.openDevTools()
 
@@ -416,9 +419,10 @@ function createNotePage(note=new myclass.Note()){
 
   // focus
   winNote.on('focus',function(){
-    console.log(winNote.id)
+    // console.log('focus window')
+    // console.log(myBook)
     curWinId=winNote.id
-    var thisNote=myBook.notes[win2note[curWinId]]
+    var thisNote=myBook.get(win2note[curWinId])
     thisNote.lastOpen=getCurrentTime()
   })
   winNote.on('blur',function(){
