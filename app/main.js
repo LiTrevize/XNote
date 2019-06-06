@@ -324,7 +324,6 @@ ipc.on('showMindmap',function(event,mynote){
 
 
 
-
 // ipc.on('timeline',function(event){
 //   createPage('src/record/timeline.html')
 // })
@@ -408,7 +407,7 @@ function createNotePage(note=new myclass.Note()){
   // console.log(myBook.length)
   // console.log(win2note)
   // Open the DevTools.
-  // winNote.webContents.openDevTools()
+  winNote.webContents.openDevTools()
 
 
   // send message to load note

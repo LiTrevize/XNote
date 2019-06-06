@@ -16,11 +16,14 @@ function SearchKeywords()
 }
 keyword.onkeyup= function() {
     var keywordval = keyword.value;
-    // console.log(keywordval)
+    console.log(lastkeyword)
+    console.log(keywordval)
     var contents = content.innerHTML;
-    contents.replace(new RegExp("/<span style=\"background:yellow;\">"+lastkeyword+"<\/span>",'g'),lastkeyword);
-    contents=contents.split(keywordval)
-    // console.log(contents)
-    content.innerHTML = contents.join('<span style="background:yellow;">' + keywordval + '</span>');
+    contents=contents.replace(new RegExp("<span style=\"background:yellow;\">"+lastkeyword+"<\/span>",'g'),lastkeyword);
+    if(keywordval){
+        contents=contents.replace(new RegExp(keywordval,"g"),'<span style="background:yellow;">' + keywordval + '</span>')
+        // console.log(contents)    
+    }
+    content.innerHTML = contents;
     lastkeyword=keywordval
 };
