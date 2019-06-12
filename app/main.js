@@ -233,7 +233,7 @@ function createWindow () {
   // mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   win2note[mainWindow.id]=-1
   curWinId=mainWindow.id
@@ -374,7 +374,7 @@ function createMindmap(){
   //windows.push(mindMap)
   curWin=mindMap
   // Open the DevTools.
-  // mindMap.webContents.openDevTools()
+  mindMap.webContents.openDevTools()
 
 
   // focus
@@ -413,7 +413,7 @@ function createNotePage(note=new myclass.Note()){
     win2note[curWinId]=myBook.length-1
   }else win2note[curWinId]=idx
   // Open the DevTools.
-  // winNote.webContents.openDevTools()
+  winNote.webContents.openDevTools()
 
 
   // send message to load note
@@ -469,7 +469,7 @@ function createPage(htmlpath=""){
   winNote.loadFile(htmlpath)
   // win2note.push(winNote)
   // Open the DevTools.
-  // winNote.webContents.openDevTools()
+  winNote.webContents.openDevTools()
 
 
   // send message to load note
