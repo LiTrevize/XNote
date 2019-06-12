@@ -179,7 +179,33 @@ var template = [
       ]
   },
   {
-      label:'View'
+      label:'View',
+      submenu:[
+        {
+          label:'mindmap',
+          click:function(){
+              // BrowserWindow.fromId(curWinId).webContents.send('fetchMindmap')
+              BrowserWindow.getFocusedWindow().webContents.send('fetchMindmap')
+          }
+        },
+        {
+          label:'Theme',
+          submenu:[
+            {
+              label:'Day',
+              click:function(){
+                BrowserWindow.getFocusedWindow().send('toDay')
+              }
+            },
+            {
+              label:'Night',
+              click:function(){
+                BrowserWindow.getFocusedWindow().send('toNight')
+              }
+            }
+          ]
+        }
+      ]
   },
   {
       label:'Help',
@@ -198,13 +224,7 @@ var template = [
                   console.log(ipcRenderer.sendSync('timeline'))
               }
           },
-          {
-            label:'mindmap',
-            click:function(){
-                // BrowserWindow.fromId(curWinId).webContents.send('fetchMindmap')
-                BrowserWindow.getFocusedWindow().webContents.send('fetchMindmap')
-            }
-          }
+          
       ]
   }
 ];
@@ -279,6 +299,7 @@ app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   myBook.sortNote()
+  myBook.emptyContent()
   saveToJson("saves/record.json",myBook)
   if (process.platform !== 'darwin') app.quit()
 })

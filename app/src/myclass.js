@@ -40,7 +40,7 @@ module.exports = {
                 this.notes[i].lastOpen=mynote.lastOpen
                 this.notes[i].TotalTime=mynote.TotalTime
             }else{
-                mynote.content='';
+                mynote.content="";
                 this.notes.push(mynote);
             }
         }
@@ -94,6 +94,11 @@ module.exports = {
                     this.notes.splice(i,1)
             }
             this.notes.sort(function(a,b){return b.lastOpen-a.lastOpen})
+        }
+        this.emptyContent=function(){
+            for(var i=0;i<this.notes.length;i++){
+                this.notes[i].content=""
+            }
         }
     }
 }

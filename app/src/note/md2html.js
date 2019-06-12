@@ -42,6 +42,16 @@ marked.setOptions({
     // val=stripHtml(val)
     // $("#show").html(md.render(val));
 
+    setTimeout("updateHtml()",1000)
+
+    function updateHtml(){
+      var val = document.getElementById("content").innerHTML;
+      console.log(val)
+      val=stripHtml(val)
+      $("#show").html(md.render(val));
+    }
+    
+
     $("#content").on("keyup", function() {
       var val = $(this).html();
       val=stripHtml(val)

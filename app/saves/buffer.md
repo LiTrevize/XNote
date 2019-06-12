@@ -1,4 +1,4 @@
-&nbsp;
+
 # A General Theory of Reactivity
 
 *A work in progress.*
