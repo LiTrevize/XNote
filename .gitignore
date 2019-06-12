@@ -15,7 +15,6 @@
 team-info*
 ref*
 project_proposal/*
-Documentation/Source
-Documentation/UseCase
+Documentation/
 UMLModel/
 app/node_modules

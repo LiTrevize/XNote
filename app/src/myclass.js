@@ -1,7 +1,7 @@
 module.exports = {
     Note: function(){
         // var title="" private
-        this.title="" // public
+        this.title="untitled" // public
         this.lastOpen=0
         this.TotalTime=0
         this.words=0
@@ -26,8 +26,12 @@ module.exports = {
         this.addNote=function (mynote=new Note()){
             this.notes.push(mynote)
         }
+        this.getlen=function (){return this.notes.length;}
         this.updateNote=function(mynote){
             if(!mynote) return
+            if(mynote.title=='untitled'){
+                mynote.title=mynote.content.split('\n')[0].replace(/#|\s/g,'')
+            }
             i=this.indexOf(mynote)
             if(i>=0){
                 this.notes[i].title=mynote.title
@@ -35,7 +39,10 @@ module.exports = {
                 this.notes[i].words=mynote.words
                 this.notes[i].lastOpen=mynote.lastOpen
                 this.notes[i].TotalTime=mynote.TotalTime
-            }else this.notes.push(mynote);
+            }else{
+                mynote.content="";
+                this.notes.push(mynote);
+            }
         }
         this.indexOf=function(mynote){
             for(var i=0;i<this.notes.length;i++){
@@ -73,11 +80,25 @@ module.exports = {
                 case 12:month='Dec';break;
             }
             var ret=month+' '+t.getDate()+' '+t.getHours()+':'+t.getMinutes()
-            console.log(ret)
+            // console.log(ret)
             return ret
         }
-        this.sort=function(){
-            
+        this.sortNote=function(){
+            // remove note without path and rearrange notes in a descending order by its lastOpen
+            var i=0;
+            while(i<this.notes.length){
+                if(this.notes[i])
+                    if(this.notes[i].path)
+                        i++    
+                else
+                    this.notes.splice(i,1)
+            }
+            this.notes.sort(function(a,b){return b.lastOpen-a.lastOpen})
+        }
+        this.emptyContent=function(){
+            for(var i=0;i<this.notes.length;i++){
+                this.notes[i].content=""
+            }
         }
     }
 }

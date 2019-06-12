@@ -3,7 +3,6 @@ const myclass=require('../myclass')
 const ipcRenderer = require('electron').ipcRenderer;
 
 
-
 mynote=new myclass.Note()
 ipcRenderer.on('loadNote',function(event,note){
     // console.log(note.content)
@@ -18,6 +17,12 @@ ipcRenderer.on('fetchNote',function(event){
 })
 ipcRenderer.on('fetchMindmap',function(event){
     saveNotebuffer()
+})
+ipcRenderer.on('toDay',function(event){
+    window.location.replace('editNote_day.html')
+})
+ipcRenderer.on('toNight',function(event){
+    window.location.replace('editNote.html')
 })
 
 
@@ -38,13 +43,13 @@ function saveMyNote(){
     // console.log(mynote.content)
     // console.log('save')
     mynote.words=mynote.content.split(' ').join('').length
-    ipcRenderer.sendSync('saveNote',mynote)
+    ipcRenderer.send('saveNote',mynote)
 }
 
 function saveNotebuffer(){
     mynote.content=document.getElementById('content').innerHTML
     mynote.content=stripHtml(mynote.content)
     mynote.words=mynote.content.split(' ').join('').length
-    ipcRenderer.sendSync('showMindmap',mynote)
+    ipcRenderer.send('showMindmap',mynote)
 }
 

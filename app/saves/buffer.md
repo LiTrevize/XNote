@@ -1,4 +1,3 @@
-&amp;amp;amp;amp;amp;nbsp;&amp;amp;amp;amp;amp;amp;nbsp;
 # A General Theory of Reactivity
 
 *A work in progress.*&amp;amp;amp;amp;amp;amp;amp;amp;nbsp;
