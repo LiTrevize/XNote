@@ -11,7 +11,7 @@ module.exports = {
 
         this.getCounts=function()
         {
-        	return this.content.length
+        	return this.content.split(' ').length
         }
         this.toStrTime=function(time){
             if(!time) time=this.lastOpen
@@ -66,18 +66,18 @@ module.exports = {
             var t=new Date(time)
             var month=t.getMonth()
             switch(month){
-                case 1:month='Jan';break;
-                case 2:month='Feb';break;
-                case 3:month='Mar';break;
-                case 4:month='Apr';break;
-                case 5:month='May';break;
-                case 6:month='Jun';break;
-                case 7:month='Jul';break;
-                case 8:month='Aug';break;
-                case 9:month='Sep';break;
-                case 10:month='Oct';break;
-                case 11:month='Nov';break;
-                case 12:month='Dec';break;
+                case 0:month='Jan';break;
+                case 1:month='Feb';break;
+                case 2:month='Mar';break;
+                case 3:month='Apr';break;
+                case 4:month='May';break;
+                case 5:month='Jun';break;
+                case 6:month='Jul';break;
+                case 7:month='Aug';break;
+                case 8:month='Sep';break;
+                case 9:month='Oct';break;
+                case 10:month='Nov';break;
+                case 11:month='Dec';break;
             }
             var ret=month+' '+t.getDate()+' '+t.getHours()+':'+t.getMinutes()
             // console.log(ret)

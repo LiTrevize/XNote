@@ -39,7 +39,7 @@ body {
   height: 70px;
   margin: 30px 0;
   background-color: #282c31a8;
-  position: relative;
+  position: fixed;
   overflow: hidden;
   transition: all 0.5s ease;
 }
@@ -47,8 +47,8 @@ body {
   content: '';
   display: block;
   width: 3px;
-  height: 100%;
-  position: relative;
+  height: 9%;
+  position: fixed;
   background-color: #00FEDE;
   transition: all 0.5s ease;
 }
@@ -58,7 +58,7 @@ body {
 .search.open:before {
   height: 60px;
   margin: auto;
-  position: absolute;
+  position: fixed;
 }
 
 .search-box {
@@ -68,7 +68,7 @@ body {
   border: none;
   background: transparent;
   color: #fff;
-  padding: 20px 60px 20px 20px;
+  padding: 20px 21px 20px 76px;
   font-size: 20px;
 }
 .search-box:focus {
@@ -79,9 +79,9 @@ body {
   width: 100px;
   height: 100px;
   display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
+  position: fixed;
+  left: -20px;
+  top: 37px;
   padding: 12px;
   cursor: pointer;
 }
@@ -92,7 +92,7 @@ body {
   border-radius: 35px;
   border: 3px solid #00FEDE;
   display: block;
-  position: relative;
+  position: fixed;
   margin-left: 30px;
   transition: all 0.5s ease;
 }
@@ -101,8 +101,8 @@ body {
   width: 3px;
   height: 10px;
   position: absolute;
-  right: -1px;
-  top: 26px;
+  left: 28px;
+  top: 27px;
   display: block;
   background-color: #00FEDE;
   transform: rotate(-45deg);
@@ -112,9 +112,9 @@ body {
   content: '';
   width: 3px;
   height: 15px;
-  position: absolute;
-  right: -10px;
-  top: 32px;
+  position: fixed;
+  left: 60px;
+  top: 84px;
   display: block;
   background-color: #00FEDE;
   transform: rotate(-45deg);
@@ -128,14 +128,14 @@ body {
 }
 .open .search-icon:before {
   transform: rotate(52deg);
-  right: 20px;
-  top: 20px;
+  left: 23px;
+  top: 18px;
   height: 18px;
 }
 .open .search-icon:after {
   transform: rotate(-230deg);
-  right: 20px;
-  top: 9px;
+  left: 49px;
+  top: 60px;
   height: 18px;
 }
 
@@ -154,7 +154,7 @@ span {
 #content {
 float: left;
 padding: 10px 2% 10px 2%;
-margin: 30px 0px 0px 0px;
+margin: 30px 0px 0px 80px;
 background: rgba(149, 157, 165, 0.1);
 border: 0px;
 width: 50%; /* ie5win fudge begins */
@@ -178,7 +178,7 @@ width: 50%; /* ie5win fudge begins */
 voice-family: "\"}\"";
 voice-family:inherit;
 width: 48%;
-height:680px;
+min-height:680px;
 }
 html>body #show {
 width: 47%;

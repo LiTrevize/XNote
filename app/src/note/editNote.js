@@ -42,7 +42,7 @@ function saveMyNote(){
     // console.log(document.getElementById('content').value)
     // console.log(mynote.content)
     // console.log('save')
-    mynote.words=mynote.content.split(' ').join('').length
+    mynote.words=mynote.content.split(' ').length
     ipcRenderer.send('saveNote',mynote)
 }
 

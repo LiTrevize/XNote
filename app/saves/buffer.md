@@ -1,7 +1,8 @@
+
 # A General Theory of Reactivity
 
-*A work in progress.*&amp;amp;amp;amp;amp;amp;amp;amp;nbsp;
-&amp;amp;amp;amp;amp;amp;amp;amp;amp;nbsp;
+*A work in progress.*
+
 In the context of a computer program, reactivity is the process of receiving
 external stimuli and propagating events.
 This is a rather broad definition that covers a wide variety of topics.
@@ -28,8 +29,8 @@ converging on a model that unifies at least promises and observables.
 
              | **Singular**         | **Plural**
 :----------: | :------------------: | :---------------------:
-**Spatial**  | Value                | Iterable&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Value&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;
-**Temporal** | Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Value&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;gt; | Observable&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Value&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;
+**Spatial**  | Value                | Iterable&amp;amp;amp;lt;Value&amp;amp;amp;gt;
+**Temporal** | Promise&amp;amp;amp;lt;Value&amp;amp;amp;gt; | Observable&amp;amp;amp;lt;Value&amp;amp;amp;gt;
 
 However, this description fails to capture all of the varigated concepts of
 reactivity.
@@ -284,7 +285,7 @@ separated by a stride.
 function range(start, stop, step) {
     return {next: function () {
         var iteration;
-        if (start &amp;amp;amp;amp;amp;amp;amp;amp;amp;lt; stop) {
+        if (start &amp;amp;lt; stop) {
             iteration = {value: start};
             start += step;
         } else {
@@ -315,7 +316,7 @@ returning.
 ```js
 function range(start, stop, step) {
     var result = [];
-    while (start &amp;amp;amp;amp;amp;amp;amp;amp;amp;lt; stop) {
+    while (start &amp;amp;lt; stop) {
         result.push(start);
         start += step;
     }
@@ -378,7 +379,7 @@ execution of the function until it produces an iteration or terminates.
 
 ```js
 function *range(start, stop, step) {
-    while (start &amp;amp;amp;amp;amp;amp;amp;amp;amp;lt; stop) {
+    while (start &amp;amp;lt; stop) {
         yield start;
         start += step;
     }
@@ -1245,18 +1246,18 @@ A asynchronous function returns a promise.
 Should the asynchronous generator return a promise for an iterator, an iterator
 for promises?
 
-If ``Iterator&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;`` means that an iterator implements `next` such that it
-produces ``Iteration&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;``, the `next` method of an ``Iterator&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;``
-would return an ``Iteration&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;``, which is to say, iterations that
+If ``Iterator&amp;amp;lt;T&amp;amp;gt;`` means that an iterator implements `next` such that it
+produces ``Iteration&amp;amp;lt;T&amp;amp;gt;``, the `next` method of an ``Iterator&amp;amp;lt;Promise&amp;amp;lt;T&amp;amp;gt;&amp;amp;gt;``
+would return an ``Iteration&amp;amp;lt;Promise&amp;amp;lt;T&amp;amp;gt;&amp;amp;gt;``, which is to say, iterations that
 carry promises for values.
 
 There is another possibility.
 An asynchronous iterator might implement `next` such that it produces
-``Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Iteration&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;`` rather than ``Iteration&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;``.
+``Promise&amp;amp;lt;Iteration&amp;amp;lt;T&amp;amp;gt;&amp;amp;gt;`` rather than ``Iteration&amp;amp;lt;Promise&amp;amp;lt;T&amp;amp;gt;&amp;amp;gt;``.
 That is to say, a promise that would eventually produce an iteration containing
 a value, rather than an iteration that contains a promise for a value.
 
-This is, an iterator of promises, yielding ``Iteration&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;``:
+This is, an iterator of promises, yielding ``Iteration&amp;amp;lt;Promise&amp;amp;lt;T&amp;amp;gt;&amp;amp;gt;``:
 
 ```js
 var iteration = iterator.next();
@@ -1265,7 +1266,7 @@ iteration.value.then(function (value) {
 });
 ```
 
-This is a promise iterator, yielding ``Promise&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;Iteration&amp;amp;amp;amp;amp;amp;amp;amp;amp;lt;T&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;amp;amp;gt;``:
+This is a promise iterator, yielding ``Promise&amp;amp;lt;Iteration&amp;amp;lt;T&amp;amp;gt;&amp;amp;gt;``:
 
 ```js
 promiseIterator.next()

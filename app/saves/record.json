@@ -1,1 +1,67 @@
-{"notes":[{"title":"gtor","lastOpen":1560341538252,"TotalTime":115195947,"words":0,"path":"D:\\Projects\\XNote\\app\\saves\\gtor.md","content":"","desc":"No description."},{"title":"test","lastOpen":1560340834937,"TotalTime":198489,"words":56,"path":"D:\\Projects\\XNote\\app\\saves\\test.txt","content":"","desc":"No description."},{"title":"hw4","lastOpen":1559802231091,"TotalTime":593557979,"words":74,"path":"D:\\Projects\\XNote\\app\\saves\\hw4.md","content":"","desc":"No description."},{"title":"Review","lastOpen":1559802063021,"TotalTime":3978592209,"words":2284,"path":"D:\\Projects\\XNote\\app\\saves\\Review.md","content":"","desc":"No description."},{"title":"buffer","lastOpen":1558422635337,"TotalTime":72818,"words":2609,"path":"D:\\Projects\\XNote\\app\\saves\\buffer.md","content":"","desc":"No description."}]}
+{
+    "notes": [
+        {
+            "title": "buffer",
+            "lastOpen": 1560523314017,
+            "TotalTime": 233735,
+            "words": 2609,
+            "path": "D:\\Projects\\XNote\\app\\saves\\buffer.md",
+            "content": "",
+            "desc": "No description."
+        },
+        {
+            "title": "week8",
+            "lastOpen": 1560523173664,
+            "TotalTime": 314872,
+            "words": 152,
+            "path": "D:\\Projects\\XNote\\app\\saves\\week8.md",
+            "content": "",
+            "desc": "No description."
+        },
+        {
+            "title": "test",
+            "lastOpen": 1560522801425,
+            "TotalTime": 210240,
+            "words": 56,
+            "path": "D:\\Projects\\XNote\\app\\saves\\test.txt",
+            "content": "",
+            "desc": "This is a test<br>"
+        },
+        {
+            "title": "gtor",
+            "lastOpen": 1560522722524,
+            "TotalTime": 646715,
+            "words": 10135,
+            "path": "D:\\Projects\\XNote\\app\\saves\\gtor.md",
+            "content": "",
+            "desc": "No description."
+        },
+        {
+            "title": "hw5",
+            "lastOpen": 1560522242415,
+            "TotalTime": 82114,
+            "words": 0,
+            "path": "D:\\Projects\\XNote\\app\\saves\\hw5.md",
+            "content": "",
+            "desc": "No description."
+        },
+        {
+            "title": "Review",
+            "lastOpen": 1560521782409,
+            "TotalTime": 17766090,
+            "words": 2284,
+            "path": "D:\\Projects\\XNote\\app\\saves\\Review.md",
+            "content": "",
+            "desc": "This is a review for the course"
+        },
+        {
+            "title": "hw4",
+            "lastOpen": 1560521768781,
+            "TotalTime": 188392,
+            "words": 74,
+            "path": "D:\\Projects\\XNote\\app\\saves\\hw4.md",
+            "content": "",
+            "desc": "No description."
+        }
+    ]
+}

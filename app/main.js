@@ -266,8 +266,8 @@ function createWindow () {
   
   
   mainWindow.on('focus',function(){
-    console.log(mainWindow.id)
-    
+    // console.log(mainWindow.id)
+    mainWindow.webContents.send('reload')
     // mainWindow.webContents.send('loadtl',myBook)
   })
 
@@ -323,6 +323,17 @@ ipc.on('openNote',function(event,mynoteid){
   thisnote.content=loadFile(thisnote.path)
   createNotePage(thisnote)
 })
+
+// modify desc and title
+ipc.on('confirmSet', function(event,noteid,newName,newintro){
+  var thisnote = myBook.notes[noteid]
+  thisnote.desc = newintro
+  thisnote.title = newName
+})
+
+
+
+
 
 ipc.on('saveNote',function(event,mynote){
   // console.log(BrowserWindow.getFocusedWindow().webContents)

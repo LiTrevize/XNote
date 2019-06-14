@@ -29,8 +29,8 @@ converging on a model that unifies at least promises and observables.
 
              | **Singular**         | **Plural**
 :----------: | :------------------: | :---------------------:
-**Spatial**  | Value                | Iterable&lt;Value&gt;
-**Temporal** | Promise&lt;Value&gt; | Observable&lt;Value&gt;
+**Spatial**  | Value                | Iterable&amp;amp;lt;Value&amp;amp;gt;
+**Temporal** | Promise&amp;amp;lt;Value&amp;amp;gt; | Observable&amp;amp;lt;Value&amp;amp;gt;
 
 However, this description fails to capture all of the varigated concepts of
 reactivity.
@@ -285,7 +285,7 @@ separated by a stride.
 function range(start, stop, step) {
     return {next: function () {
         var iteration;
-        if (start < stop) {
+        if (start &amp;lt; stop) {
             iteration = {value: start};
             start += step;
         } else {
@@ -316,7 +316,7 @@ returning.
 ```js
 function range(start, stop, step) {
     var result = [];
-    while (start < stop) {
+    while (start &amp;lt; stop) {
         result.push(start);
         start += step;
     }
@@ -379,7 +379,7 @@ execution of the function until it produces an iteration or terminates.
 
 ```js
 function *range(start, stop, step) {
-    while (start < stop) {
+    while (start &amp;lt; stop) {
         yield start;
         start += step;
     }
@@ -1246,18 +1246,18 @@ A asynchronous function returns a promise.
 Should the asynchronous generator return a promise for an iterator, an iterator
 for promises?
 
-If ``Iterator<T>`` means that an iterator implements `next` such that it
-produces ``Iteration<T>``, the `next` method of an ``Iterator<Promise<T>>``
-would return an ``Iteration<Promise<T>>``, which is to say, iterations that
+If ``Iterator&amp;lt;T&amp;gt;`` means that an iterator implements `next` such that it
+produces ``Iteration&amp;lt;T&amp;gt;``, the `next` method of an ``Iterator&amp;lt;Promise&amp;lt;T&amp;gt;&amp;gt;``
+would return an ``Iteration&amp;lt;Promise&amp;lt;T&amp;gt;&amp;gt;``, which is to say, iterations that
 carry promises for values.
 
 There is another possibility.
 An asynchronous iterator might implement `next` such that it produces
-``Promise<Iteration<T>>`` rather than ``Iteration<Promise<T>>``.
+``Promise&amp;lt;Iteration&amp;lt;T&amp;gt;&amp;gt;`` rather than ``Iteration&amp;lt;Promise&amp;lt;T&amp;gt;&amp;gt;``.
 That is to say, a promise that would eventually produce an iteration containing
 a value, rather than an iteration that contains a promise for a value.
 
-This is, an iterator of promises, yielding ``Iteration<Promise<T>>``:
+This is, an iterator of promises, yielding ``Iteration&amp;lt;Promise&amp;lt;T&amp;gt;&amp;gt;``:
 
 ```js
 var iteration = iterator.next();
@@ -1266,7 +1266,7 @@ iteration.value.then(function (value) {
 });
 ```
 
-This is a promise iterator, yielding ``Promise<Iteration<T>>``:
+This is a promise iterator, yielding ``Promise&amp;lt;Iteration&amp;lt;T&amp;gt;&amp;gt;``:
 
 ```js
 promiseIterator.next()
