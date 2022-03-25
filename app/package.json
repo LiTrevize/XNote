@@ -17,7 +17,7 @@
   "author": "",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^4.1.4"
+    "electron": "^13.6.6"
   },
   "dependencies": {
     "katex": "^0.10.2",
